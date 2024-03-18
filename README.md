@@ -4,8 +4,6 @@
 
 # Asciifier
 
-Ascii-ifies text!
-
 </div>
 
 Ascii-ifier (Ascii-ifies text!)
