@@ -2,9 +2,8 @@ use std::collections::HashMap;
 use std::fs::File;
 use std::io::{self, BufRead};
 
-// Define a struct to hold an ASCII character and its ASCII art representation
+// Define a struct to hold an ASCII art character
 struct AsciiChar {
-    character: char,
     ascii_art: Vec<String>,
 }
 
@@ -30,7 +29,6 @@ fn read_ascii_font(filename: &str) -> HashMap<char, AsciiChar> {
                 ascii_chars.insert(
                     character,
                     AsciiChar {
-                        character: character,
                         ascii_art: ascii_art.clone(),
                     },
                 );
@@ -82,14 +80,8 @@ fn string_to_ascii(input: &str, ascii_chars: &HashMap<char, AsciiChar>) {
     }
 }
 
-// Define the main function
 fn main() {
-    // Read the ASCII font from a file
     let ascii_chars = read_ascii_font("fonts/default.txt");
-
-    // Define the input string
-    let input = "ABC";
-
-    // Convert the input string to ASCII art and print it
+    let input = "A\nB";
     string_to_ascii(input, &ascii_chars);
 }
