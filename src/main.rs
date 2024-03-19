@@ -48,6 +48,7 @@ fn read_ascii_font(filename: &str) -> HashMap<char, AsciiChar> {
 
 // ------ Function to Convert Given String to ASCII Art ------ //
 fn string_to_ascii(input: &str, ascii_chars: &HashMap<char, AsciiChar>) {
+    let input = input.to_uppercase(); // Convert input to uppercase
     let mut ascii_string: Vec<&AsciiChar> = Vec::new(); // Vector to hold ASCII Chars
     let mut max_height = 0; // Max Height of ASCII art value
 
@@ -80,8 +81,19 @@ fn string_to_ascii(input: &str, ascii_chars: &HashMap<char, AsciiChar>) {
     }
 }
 
+// ------ Function to Print Available Characters in Font ------ //
+fn print_font_list(ascii_chars: &HashMap<char, AsciiChar>) {
+    let mut characters: Vec<char> = ascii_chars.keys().cloned().collect();
+    characters.sort();
+    println!("Available characters in the font:");
+    for ch in characters {
+        println!("  - {}", ch);
+    }
+}
+
 fn main() {
     let ascii_chars = read_ascii_font("fonts/default.txt");
-    let input = "A\nB";
-    string_to_ascii(input, &ascii_chars);
+    let input = "aB";
+    print_font_list(&ascii_chars);
+    string_to_ascii(input, &ascii_chars)
 }
