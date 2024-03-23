@@ -8,7 +8,7 @@
 
 ## Todos
 
-- [ ] Read Font to Vector with characters + ascii art as a struct or touple
+- [x] Read Font to Vector with characters + ascii art as a struct or touple
 - [ ] Loop through input string, and convert to ascii
   - INCLUDE INTERPRETATION OF SPACES, NEW LINES, TABS, ETC.
 - [ ] Loop through and print out the ascii representation

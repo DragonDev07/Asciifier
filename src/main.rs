@@ -1,11 +1,6 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-// - [ ] Read Font to Vector with characters + ascii art as a struct or touple
-// - [ ] Loop through input string, and convert to ascii
-//   - INCLUDE INTERPRETATION OF SPACES, NEW LINES, TABS, ETC.
-// - [ ] Loop through and print out the ascii representation
-
 struct AsciiChar {
     character: char,
     ascii: Vec<String>,
