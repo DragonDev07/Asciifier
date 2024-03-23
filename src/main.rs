@@ -44,24 +44,47 @@ fn read_font(font_path: &str) -> Vec<AsciiChar> {
     return ascii_chars;
 }
 
-// // ------ Convert Input String to ASCII Art ------ //
-// fn convert_to_ascii(input: &str, ascii_chars: &[AsciiChar]) -> Vec<String> {
-//    // TODO: Rewrite to simply add ascii
-// }
+// ------ Convert Input String to ASCII Art ------ //
+fn convert_to_ascii(input: &str, ascii_chars: &[AsciiChar]) -> Vec<String> {
+    let input = input.trim(); // Remove leading and trailing whitespaces
+    let mut ascii_art: Vec<String> = Vec::new(); // Declare Vec to store ASCII Art
 
-// ------ Print Converted ASCII Art ------ //
-fn print_ascii(ascii_art: &Vec<String>) {
+    // Loop through input string, and find corresponding ASCII Art
+    for c in input.chars() {
+        let ascii_char = ascii_chars
+            .iter()
+            .find(|ascii_char| ascii_char.character == c)
+            .unwrap();
+
+        // Append ASCII Art to Vector
+        for (i, line) in ascii_char.ascii.iter().enumerate() {
+            if ascii_art.len() <= i {
+                ascii_art.push(String::new());
+            }
+
+            ascii_art[i].push_str(line);
+        }
+    }
+
+    return ascii_art;
+}
+
+// ------ Convert & Print ASCII Art ------ //
+fn print_ascii(input: &str, ascii_chars: &Vec<AsciiChar>) {
+    // Comvert input to ASCII Art
+    let ascii_art = convert_to_ascii(input, ascii_chars);
+
+    // Print ASCII Art
     for line in ascii_art {
         println!("{}", line);
     }
 }
 
-fn main() {    
-    let input = "abc";
+fn main() {
+    let input = "Hello World!";
     let font_path = "fonts/default.txt";
-    let ascii_chars = read_font(font_path);
-    // let ascii_art = convert_to_ascii(input, &ascii_chars);
+    let font = read_font(font_path);
 
-    print_font(&ascii_chars);
-    // print_ascii(&ascii_art);
+    print_font(&font);
+    print_ascii(&input, &font);
 }
