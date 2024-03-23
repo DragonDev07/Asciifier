@@ -1,5 +1,4 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader};
+const DEFAULT_FONT: &str = include_str!("fonts/default.txt");
 
 struct AsciiChar {
     character: char,
@@ -19,26 +18,24 @@ fn print_font(ascii_chars: &Vec<AsciiChar>) {
 }
 
 // ------ Read Font Function, given a path to font file, return a Vector of Type AsciiChar ------ //
-fn read_font(font_path: &str) -> Vec<AsciiChar> {
-    let file = File::open(font_path).expect("Unable to open file"); // Open given file
-    let reader = BufReader::new(file); // Declare BufReader to read file
-    let mut lines = reader.lines(); // Declare lines iterator
+fn read_font(font: &str) -> Vec<AsciiChar> {
+    let mut lines = font.lines(); // Declare lines iterator
 
     let mut ascii_chars: Vec<AsciiChar> = Vec::new(); // Declare Vec to store AsciiChars
 
     // Loop through lines, and create AsciiChar structs
-    while let Some(Ok(character_line)) = lines.next() {
+    while let Some(character_line) = lines.next() {
         let character = character_line.chars().next().unwrap();
         let mut ascii = Vec::new();
 
-        while let Some(Ok(line)) = lines.next() {
+        while let Some(line) = lines.next() {
             if line.is_empty() {
                 break;
             }
-            ascii.push(line);
+            ascii.push(line.to_string()); // Convert line to string before pushing
         }
 
-        ascii_chars.push(AsciiChar { character, ascii });
+        ascii_chars.push(AsciiChar { character, ascii }); // Provide ascii field correctly
     }
 
     return ascii_chars;
@@ -82,8 +79,7 @@ fn print_ascii(input: &str, ascii_chars: &Vec<AsciiChar>) {
 
 fn main() {
     let input = "Hello World!";
-    let font_path = "fonts/default.txt";
-    let font = read_font(font_path);
+    let font = read_font(DEFAULT_FONT);
 
     print_font(&font);
     print_ascii(&input, &font);
