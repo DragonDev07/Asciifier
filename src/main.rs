@@ -1,4 +1,20 @@
+use clap::Parser;
+
 const DEFAULT_FONT: &str = include_str!("fonts/default.txt");
+
+#[derive(Parser, Debug)]
+#[command(version = "0.1.0", author = "Teo Welton <teowelton@gmail.com>")]
+struct Args {
+    #[arg(short = 'i', long = "input", help = "String to convert to ASCII Art")]
+    input: Option<String>,
+
+    #[arg(
+        short = 'f',
+        long = "font",
+        help = "name of a built-in font or path to a font file. IF provided without -i, it will print the font",
+    )]
+    font: Option<String>,
+}
 
 struct AsciiChar {
     character: char,
@@ -32,10 +48,10 @@ fn read_font(font: &str) -> Vec<AsciiChar> {
             if line.is_empty() {
                 break;
             }
-            ascii.push(line.to_string()); // Convert line to string before pushing
+            ascii.push(line.to_string());
         }
 
-        ascii_chars.push(AsciiChar { character, ascii }); // Provide ascii field correctly
+        ascii_chars.push(AsciiChar { character, ascii });
     }
 
     return ascii_chars;
@@ -78,9 +94,56 @@ fn print_ascii(input: &str, ascii_chars: &Vec<AsciiChar>) {
 }
 
 fn main() {
-    let input = "Hello World!";
-    let font = read_font(DEFAULT_FONT);
+    // Parse Command Line Arguments using clap
+    let args = Args::parse();
 
-    print_font(&font);
-    print_ascii(&input, &font);
+    // If neither font or input is provided, print usage
+    if args.font.is_none() && args.input.is_none() {
+        println!("USAGE GOES HERE");
+        return;
+    }
+
+    // If input is not provided, but font is, print font
+    if args.input.is_none() && args.font.is_some() {
+        match args.font {
+            // Print Default Font
+            Some(font) if font.to_ascii_lowercase() == "default" => {
+                let ascii_chars = read_font(DEFAULT_FONT);
+                print_font(&ascii_chars);
+            }
+
+            _ => {
+                // TODO: Read font from file
+                println!("This feature is not implemented yet");
+            }
+        }
+
+        return;
+    }
+
+    // If input is provided, but font is not, use default font
+    if args.input.is_some() && args.font.is_none() {
+        let ascii_chars = read_font(DEFAULT_FONT);
+        print_ascii(&args.input.unwrap(), &ascii_chars);
+        return;
+    }
+
+    // If both input and font are provided, use provided font and input
+    if args.input.is_some() && args.font.is_some() {
+        match args.font {
+            // Print Default Font
+            Some(font) if font.to_ascii_lowercase() == "default" => {
+                let ascii_chars = read_font(DEFAULT_FONT);
+                print_ascii(&args.input.unwrap(), &ascii_chars);
+                return;
+            }
+
+            _ => {
+                // TODO: Read font from file
+                println!("This feature is not implemented yet");
+            }
+        }
+
+        return;
+    }
 }
