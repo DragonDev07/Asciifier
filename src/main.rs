@@ -1,8 +1,6 @@
 use clap::Parser;
-
-// ------ Import Other Modules ------ //
 mod args;
-mod font;
+mod cli;
 
 fn main() {
     // Parse Command Line Arguments using clap
@@ -15,13 +13,13 @@ fn main() {
     }
 
     // Get the font
-    let ascii_chars: Vec<font::AsciiChar> = font::get_font(&args.font);
+    let ascii_chars: Vec<cli::AsciiChar> = cli::get_font(&args.font);
 
     if let Some(input) = args.input {
         // If input is provided, print it with the chosen font
-        font::print_ascii(&input, &ascii_chars);
+        cli::print_ascii(&input, &ascii_chars);
     } else {
         // If no input is provided, print what is read from the font
-        font::print_font(&ascii_chars);
+        cli::print_font(&ascii_chars);
     }
 }

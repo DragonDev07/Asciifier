@@ -1,11 +1,12 @@
-const DEFAULT_FONT: &str = include_str!("fonts/default.txt");
+const DEFAULT_FONT: &str = include_str!("../fonts/default.txt");
 
+/// Struct Ascii Char that holds both the art and the associated character
 pub struct AsciiChar {
     pub character: char,
     pub ascii: Vec<String>,
 }
 
-// ------ Function to print everything that is read from a font ------ //
+/// `print_font()` - Prints all characters and associated ascii art that is read from a font
 pub fn print_font(ascii_chars: &Vec<AsciiChar>) {
     for ascii_char in ascii_chars {
         println!("Character: {}", ascii_char.character);
@@ -17,7 +18,7 @@ pub fn print_font(ascii_chars: &Vec<AsciiChar>) {
     }
 }
 
-// ------ Function to read font to a Vector of AsciiChars ------ //
+/// `read_font()` - Read a provided font to a Vector of AsciiChars
 pub fn read_font(font: &str) -> Vec<AsciiChar> {
     let mut lines = font.lines(); // Declare lines iterator
 
@@ -41,7 +42,7 @@ pub fn read_font(font: &str) -> Vec<AsciiChar> {
     return ascii_chars;
 }
 
-// ------ Function to convert input to AsciiChars ------ //
+/// `convert_to_ascii()` - Converts provided input to AsciiChars
 pub fn convert_to_ascii(input: &str, ascii_chars: &[AsciiChar]) -> Vec<String> {
     let input = input.trim(); // Remove leading and trailing whitespaces
     let mut ascii_art: Vec<String> = Vec::new(); // Declare Vec to store ASCII Art
@@ -66,13 +67,16 @@ pub fn convert_to_ascii(input: &str, ascii_chars: &[AsciiChar]) -> Vec<String> {
     return ascii_art;
 }
 
-// ------ Function to read font from file ------ //
+/// `read_font_from_file()` - Reads a font from given filepath
 pub fn read_font_from_file(font_path: &str) -> Vec<AsciiChar> {
     let font = std::fs::read_to_string(font_path).expect("Could not read font file");
     return read_font(&font);
 }
 
-// ------ Function to get font based on font_option arg ------ //
+/// `get_font()` - Get font based on the provided font option
+/// - If no font is provided, it will return the default font
+/// - If the name of a font is provided, it will read the font from the associated BUILT-IN font
+/// - If a path to a font is provided, it will read the font from the file
 pub fn get_font(font_option: &Option<String>) -> Vec<AsciiChar> {
     match font_option {
         Some(font) if font.to_ascii_lowercase() == "default" => read_font(DEFAULT_FONT),
@@ -81,7 +85,7 @@ pub fn get_font(font_option: &Option<String>) -> Vec<AsciiChar> {
     }
 }
 
-// ------ Function to convert & print ASCII Art ------ //
+/// `print_ascii()` - Converts input to ASCII Art and prints it
 pub fn print_ascii(input: &str, ascii_chars: &Vec<AsciiChar>) {
     // Comvert input to ASCII Art
     let ascii_art = convert_to_ascii(input, ascii_chars);
