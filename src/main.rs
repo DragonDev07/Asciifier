@@ -11,7 +11,7 @@ struct Args {
     #[arg(
         short = 'f',
         long = "font",
-        help = "name of a built-in font or path to a font file. IF provided without -i, it will print the font",
+        help = "name of a built-in font or path to a font file. IF provided without -i, it will print the font"
     )]
     font: Option<String>,
 }
@@ -57,6 +57,13 @@ fn read_font(font: &str) -> Vec<AsciiChar> {
     return ascii_chars;
 }
 
+// ------ Read font from file ------ //
+fn read_font_from_file(path: &str) -> Vec<AsciiChar> {
+    println!("Reading font from file: {}", &path);
+    let font = std::fs::read_to_string(path).expect("Failed to read font file");
+    return read_font(&font);
+}
+
 // ------ Convert Input String to ASCII Art ------ //
 fn convert_to_ascii(input: &str, ascii_chars: &[AsciiChar]) -> Vec<String> {
     let input = input.trim(); // Remove leading and trailing whitespaces
@@ -97,6 +104,9 @@ fn main() {
     // Parse Command Line Arguments using clap
     let args = Args::parse();
 
+    // Ascii Chars
+    let ascii_chars;
+
     // If neither font or input is provided, print usage
     if args.font.is_none() && args.input.is_none() {
         println!("USAGE GOES HERE");
@@ -108,15 +118,16 @@ fn main() {
         match args.font {
             // Print Default Font
             Some(font) if font.to_ascii_lowercase() == "default" => {
-                let ascii_chars = read_font(DEFAULT_FONT);
-                print_font(&ascii_chars);
+                ascii_chars = read_font(DEFAULT_FONT);
             }
 
             _ => {
-                // TODO: Read font from file
-                println!("This feature is not implemented yet");
+                // Read font from file
+                ascii_chars = read_font_from_file(&args.font.unwrap());
             }
         }
+
+        print_font(&ascii_chars);
 
         return;
     }
@@ -133,16 +144,16 @@ fn main() {
         match args.font {
             // Print Default Font
             Some(font) if font.to_ascii_lowercase() == "default" => {
-                let ascii_chars = read_font(DEFAULT_FONT);
-                print_ascii(&args.input.unwrap(), &ascii_chars);
-                return;
+                ascii_chars = read_font(DEFAULT_FONT);
             }
 
             _ => {
-                // TODO: Read font from file
-                println!("This feature is not implemented yet");
+                // Read font from file
+                ascii_chars = read_font_from_file(&args.font.unwrap());
             }
         }
+
+        print_ascii(&args.input.unwrap(), &ascii_chars);
 
         return;
     }
