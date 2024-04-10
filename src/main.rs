@@ -104,57 +104,29 @@ fn main() {
     // Parse Command Line Arguments using clap
     let args = Args::parse();
 
-    // Ascii Chars
-    let ascii_chars;
-
     // If neither font or input is provided, print usage
     if args.font.is_none() && args.input.is_none() {
         println!("USAGE GOES HERE");
         return;
     }
 
-    // If input is not provided, but font is, print font
-    if args.input.is_none() && args.font.is_some() {
-        match args.font {
-            // Print Default Font
-            Some(font) if font.to_ascii_lowercase() == "default" => {
-                ascii_chars = read_font(DEFAULT_FONT);
-            }
-
-            _ => {
-                // Read font from file
-                ascii_chars = read_font_from_file(&args.font.unwrap());
-            }
+    // Function to get the font
+    fn get_font(font_option: &Option<String>) -> Vec<AsciiChar> {
+        match font_option {
+            Some(font) if font.to_ascii_lowercase() == "default" => read_font(DEFAULT_FONT),
+            Some(font) => read_font_from_file(&font),
+            None => read_font(DEFAULT_FONT),
         }
+    }
 
+    // Get the font
+    let ascii_chars: Vec<AsciiChar> = get_font(&args.font);
+
+    // If input is provided, print it with the chosen font
+    if let Some(input) = args.input {
+        print_ascii(&input, &ascii_chars);
+    } else {
+        // If input is not provided, but font is, print font
         print_font(&ascii_chars);
-
-        return;
-    }
-
-    // If input is provided, but font is not, use default font
-    if args.input.is_some() && args.font.is_none() {
-        let ascii_chars = read_font(DEFAULT_FONT);
-        print_ascii(&args.input.unwrap(), &ascii_chars);
-        return;
-    }
-
-    // If both input and font are provided, use provided font and input
-    if args.input.is_some() && args.font.is_some() {
-        match args.font {
-            // Print Default Font
-            Some(font) if font.to_ascii_lowercase() == "default" => {
-                ascii_chars = read_font(DEFAULT_FONT);
-            }
-
-            _ => {
-                // Read font from file
-                ascii_chars = read_font_from_file(&args.font.unwrap());
-            }
-        }
-
-        print_ascii(&args.input.unwrap(), &ascii_chars);
-
-        return;
     }
 }
