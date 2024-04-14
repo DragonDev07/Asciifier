@@ -8,7 +8,7 @@ fn main() {
 
     // If neither font or input is provided, print usage
     if args.font.is_none() && args.input.is_none() {
-        println!("USAGE GOES HERE");
+        
         return;
     }
 
