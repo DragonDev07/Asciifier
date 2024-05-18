@@ -7,11 +7,15 @@ pub fn args() -> clap::ArgMatches {
         .arg_required_else_help(true)
         .arg(arg!([text] "The text to convert to ASCII").required(true))
         .arg(
-            arg!(-f --font <FONT> "Specifies the Built-In font to use or the path to read from")
+            arg!(-f --font <FONT> "ASCII Font to use - OPTIONS: 'default', 'bulbhead', '<path to .aff>'")
                 .required(false)
                 .value_parser(value_parser!(String)),
         )
-        .arg(arg!(-d --debug "Enables debug mode").action(ArgAction::SetTrue))
+        .arg(
+            arg!(-d --debug "Enables debug mode")
+                .action(ArgAction::SetTrue)
+                .required(false),
+        )
         .get_matches();
 
     return matches;
@@ -24,7 +28,7 @@ pub fn handle_debug(matches: &clap::ArgMatches, ascii_chars: &Vec<cli::AsciiChar
     }
 }
 
-/// `handle-font() - Get font based on command arguments`
+/// `handle_font() - Get font based on command arguments`
 /// - If no font is provided, will return default font
 /// - If the name of a built-in font is provided, will read and return the associated one
 /// - Otherwise, it will assume a path to a font is provided, and attempt to read it
