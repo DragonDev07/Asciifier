@@ -34,10 +34,10 @@ pub fn handle_debug(matches: &clap::ArgMatches, ascii_chars: &Vec<cli::AsciiChar
 /// - Otherwise, it will assume a path to a font is provided, and attempt to read it
 pub fn handle_font(matches: &clap::ArgMatches) -> Vec<cli::AsciiChar> {
     if let Some(font) = matches.get_one::<String>("font") {
-        if font.to_lowercase() == "default" {
-            return cli::read_font(cli::DEFAULT_FONT);
-        } else {
-            return cli::read_font_from_file(font);
+        match font.to_lowercase().as_str() {
+            "default" => cli::read_font(cli::DEFAULT_FONT),
+            "bulbhead" => cli::read_font(cli::BULBHEAD_FONT),
+            _ => cli::read_font_from_file(font),
         }
     } else {
         return cli::read_font(cli::DEFAULT_FONT);

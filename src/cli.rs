@@ -1,4 +1,5 @@
 pub const DEFAULT_FONT: &str = include_str!("../fonts/default.aff");
+pub const BULBHEAD_FONT: &str = include_str!("../fonts/bulbhead.aff");
 
 /// Struct Ascii Char that holds both the art and the associated character
 pub struct AsciiChar {
