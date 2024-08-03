@@ -26,7 +26,7 @@ pub fn print_ascii(input: &str, ascii_chars: &Vec<AsciiChar>) {
     let ascii_art = convert_to_ascii(input, ascii_chars);
 
     // Print ASCII Art
-    for line in ascii_art {
+    for line in &ascii_art {
         println!("{}", line);
     }
 }
@@ -68,18 +68,22 @@ fn convert_to_ascii(input: &str, ascii_chars: &[AsciiChar]) -> Vec<String> {
 
     // Loop through input string, and find corresponding ASCII Art
     for c in input.chars() {
-        let ascii_char = ascii_chars
-            .iter()
-            .find(|ascii_char| ascii_char.character == c)
-            .unwrap();
+        if c == ' ' {
+            ascii_art.push("\n".to_string());
+        } else {
+            let ascii_char = ascii_chars
+                .iter()
+                .find(|ascii_char| ascii_char.character == c)
+                .unwrap();
 
-        // Append ASCII Art to Vector
-        for (i, line) in ascii_char.ascii.iter().enumerate() {
-            if ascii_art.len() <= i {
-                ascii_art.push(String::new());
+            // Append ASCII Art to Vector
+            for (i, line) in ascii_char.ascii.iter().enumerate() {
+                if ascii_art.len() <= i {
+                    ascii_art.push(String::new());
+                }
+
+                ascii_art[i].push_str(line);
             }
-
-            ascii_art[i].push_str(line);
         }
     }
 
