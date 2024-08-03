@@ -69,7 +69,13 @@ fn convert_to_ascii(input: &str, ascii_chars: &[AsciiChar]) -> Vec<String> {
     // Loop through input string, and find corresponding ASCII Art
     for c in input.chars() {
         if c == ' ' {
-            ascii_art.push("\n".to_string());
+            for i in 0..ascii_art.len() {
+                ascii_art[i].push_str(" ");
+            }
+
+            if let Some(last) = ascii_art.last_mut() {
+                last.push_str("\n");
+            }
         } else {
             let ascii_char = ascii_chars
                 .iter()
