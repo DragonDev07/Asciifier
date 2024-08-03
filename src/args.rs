@@ -37,6 +37,7 @@ pub fn handle_font(matches: &clap::ArgMatches) -> Vec<cli::AsciiChar> {
         match font.to_lowercase().as_str() {
             "default" => cli::read_font(cli::DEFAULT_FONT),
             "bulbhead" => cli::read_font(cli::BULBHEAD_FONT),
+            "epic" => cli::read_font(cli::EPIC_FONT),
             _ => cli::read_font_from_file(font),
         }
     } else {
