@@ -68,28 +68,18 @@ fn convert_to_ascii(input: &str, ascii_chars: &[AsciiChar]) -> Vec<String> {
 
     // Loop through input string, and find corresponding ASCII Art
     for c in input.chars() {
-        if c == ' ' {
-            for i in 0..ascii_art.len() {
-                ascii_art[i].push_str(" ");
+        let ascii_char = ascii_chars
+            .iter()
+            .find(|ascii_char| ascii_char.character == c)
+            .unwrap();
+
+        // Append ASCII Art to Vector
+        for (i, line) in ascii_char.ascii.iter().enumerate() {
+            if ascii_art.len() <= i {
+                ascii_art.push(String::new());
             }
 
-            if let Some(last) = ascii_art.last_mut() {
-                last.push_str("\n");
-            }
-        } else {
-            let ascii_char = ascii_chars
-                .iter()
-                .find(|ascii_char| ascii_char.character == c)
-                .unwrap();
-
-            // Append ASCII Art to Vector
-            for (i, line) in ascii_char.ascii.iter().enumerate() {
-                if ascii_art.len() <= i {
-                    ascii_art.push(String::new());
-                }
-
-                ascii_art[i].push_str(line);
-            }
+            ascii_art[i].push_str(line);
         }
     }
 
