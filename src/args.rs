@@ -7,7 +7,7 @@ pub fn args() -> clap::ArgMatches {
         .arg_required_else_help(true)
         .arg(arg!([text] "The text to convert to ASCII").required(true))
         .arg(
-            arg!(-f --font <FONT> "ASCII Font to use - OPTIONS: 'default', 'bulbhead', '<path to .aff>'")
+            arg!(-f --font <FONT> "ASCII Font to use - OPTIONS: 'default', 'bulbhead', 'epic', '<path to .aff>'")
                 .required(false)
                 .value_parser(value_parser!(String)),
         )
