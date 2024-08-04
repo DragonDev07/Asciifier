@@ -16,13 +16,13 @@
 ## Building From Source
 **1. Clone the Repository & Enter Directory**
   ```bash
-    git clone https://github.com/DragonDev07/Asciifier
-    cd Asciifier
+  git clone https://github.com/DragonDev07/Asciifier
+  cd Asciifier
   ```
 
 **2. Build Using Cargo**
   ```bash
-    cargo build --release
+  cargo build --release
   ```
 
 **3. Finished!**
