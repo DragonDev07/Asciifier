@@ -1,3 +1,17 @@
+<div align="center">
+
+```
+
+                          _   _    __   _
+     /\                  (_) (_)  / _| (_)
+    /  \     ___    ___   _   _  | |_   _    ___   _ __
+   / /\ \   / __|  / __| | | | | |  _| | |  / _ \ | '__|
+  / ____ \  \__ \ | (__  | | | | | |   | | |  __/ | |
+ /_/    \_\ |___/  \___| |_| |_| |_|   |_|  \___| |_|
+```
+
+</div>
+
 # Asciifier
 
 [![wakatime](https://wakatime.com/badge/github/DragonDev07/Asciifier.svg)](https://wakatime.com/badge/github/DragonDev07/Asciifier)
