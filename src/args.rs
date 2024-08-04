@@ -7,7 +7,7 @@ pub fn args() -> clap::ArgMatches {
         .arg_required_else_help(true)
         .arg(arg!([text] "The text to convert to ASCII").required(true))
         .arg(
-            arg!(-f --font <FONT> "ASCII Font to use - OPTIONS: 'default', 'bulbhead', 'epic', 'arrows', '<path to .aff>'")
+            arg!(-f --font <FONT> "ASCII Font to use - OPTIONS: 'default', 'bulbhead', 'epic', 'arrows', 'banner', 'diet-cola', <path to .aff>'")
                 .required(false)
                 .value_parser(value_parser!(String)),
         )
@@ -39,6 +39,8 @@ pub fn handle_font(matches: &clap::ArgMatches) -> Vec<cli::AsciiChar> {
             "bulbhead" => cli::read_font(cli::BULBHEAD_FONT),
             "epic" => cli::read_font(cli::EPIC_FONT),
             "arrows" => cli::read_font(cli::ARROW_FONT),
+            "banner" => cli::read_font(cli::BANNER_FONT),
+            "diet-cola" => cli::read_font(cli::DIET_COLA_FONT),
             _ => cli::read_font_from_file(font),
         }
     } else {
