@@ -22,7 +22,14 @@
   ![image](https://github.com/user-attachments/assets/eb84ac2d-b3d1-4b00-95f8-1fc4e2817ac3)
   ![image](https://github.com/user-attachments/assets/95c1b31e-8b17-43e0-ad7e-b5c4eaf35260)
 
-## Usage
+## Documentation
+**Usage:** ` asciifier [OPTIONS] "<text>" `
+
+**Options:**
+| **Flag**                     | **Description**         | **Options**                                                                      |
+| ---------------------------- | ----------------------- | -------------------------------------------------------------------------------- |
+| `-f <font>`, `--font <font>` | Specify font to be used | `default`, `bulbhead`, `epic`, `arrows`, `banner`, `diet-cola`, `<path to .aff>` |
+| `-d`, `--debug`              | Enables Debug Output    | N/A                                                                              |
 
 ## Building From Source
 
