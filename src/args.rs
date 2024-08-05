@@ -1,4 +1,5 @@
 use crate::cli;
+use crate::default_font;
 use clap::{arg, command, value_parser, ArgAction};
 
 /// `args()` - Define the command arguments
